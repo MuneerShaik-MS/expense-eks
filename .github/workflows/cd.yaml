@@ -1,4 +1,4 @@
-name: eks bastion setup
+name: expense eks
 on:
   workflow_dispatch:
     inputs:
