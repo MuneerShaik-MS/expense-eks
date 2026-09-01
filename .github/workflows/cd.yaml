@@ -9,8 +9,8 @@ on:
         options:
          - apply
          - destroy 
-jobs:
-  eks-bastion:
+
+  deploying eks expense:
     runs-on: ubuntu-latest
     steps:
     - name: Copy Repo Files
@@ -25,12 +25,14 @@ jobs:
       uses: hashicorp/setup-terraform@v3
     - name: terraform init
       run: terraform init
-    - name: terraform plan
+    - name: VPC 
       if: ${{ inputs.action == 'apply' }}
-      run: terraform plan
+      run: terraform apply -auto-approve
+      run: sg 
     - name: terraform apply
       if: ${{ inputs.action == 'apply' }}
       run: terraform apply -auto-approve
-    - name: terraform destroy
-      if: ${{ inputs.action == 'destroy' }}
-      run: terraform destroy -auto-approve
+      needs: VPC
+    # - name: terraform destroy
+    #   if: ${{ inputs.action == 'destroy' }}
+    #   run: terraform destroy -auto-approve
