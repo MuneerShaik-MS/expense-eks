@@ -23,11 +23,30 @@ jobs:
         aws-region: us-east-1
     - name: setup terraform
       uses: hashicorp/setup-terraform@v3
-    - name: terraform init & plan for VPC
+    - name: terraform init & plan for VPC module
       run: |
         cd 10-vpc
         terraform init
         terraform plan
+    - name: terraform apply
+      if: ${{ inputs.action == 'apply' }}
+      run: terraform apply -auto-approve
+    - name: terraform apply
+      if: ${{ inputs.action == 'apply' }}
+      run: terraform apply -auto-approve
+      - name: terraform init & plan for SG module
+      run: |
+        cd 20-security-group
+        terraform init
+        terraform plan
+    - name: terraform apply
+      if: ${{ inputs.action == 'apply' }}
+      run: terraform apply -auto-approve
+    - name: terraform apply
+      if: ${{ inputs.action == 'apply' }}
+      run: terraform apply -auto-approve
+
+
       
     # - name: VPC 
     #   if: ${{ inputs.action == 'apply' }}
