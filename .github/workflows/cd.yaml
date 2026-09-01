@@ -26,7 +26,8 @@ jobs:
     - name: terraform init & plan for VPC
       run: |
         cd 10-vpc
-        terraform init | terraform plan
+        terraform init
+        terraform plan
       
     # - name: VPC 
     #   if: ${{ inputs.action == 'apply' }}
