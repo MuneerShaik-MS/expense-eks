@@ -26,10 +26,10 @@ jobs:
     - name: terraform init, plan and apply
       run: |
         for MODULE in 10-vpc 20-security-group 30-bastion; do
-          echo ">>> Processing $MODULE"
-          terraform -chdir=$MODULE init
-          terraform -chdir=$MODULE plan
           if [[ "${{ inputs.action }}" == apply ]]; then
+            echo ">>> Processing $MODULE"
+            terraform -chdir=$MODULE init
+            terraform -chdir=$MODULE plan; then
             terraform -chdir=$MODULE apply -auto-approve
           fi
           # if [[ "${{inputs.action }}" == "destroy" ]]; then
