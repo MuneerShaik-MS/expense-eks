@@ -8,8 +8,7 @@ on:
         type: choice
         options:
          - apply
-         - destroy 
-
+         - destroy
   deploying eks expense:
     runs-on: ubuntu-latest
     steps:
