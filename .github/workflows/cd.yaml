@@ -9,6 +9,7 @@ on:
         options:
          - apply
          - destroy
+  jobs:  
   deploying eks expense:
     runs-on: ubuntu-latest
     steps:
