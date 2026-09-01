@@ -1,0 +1,36 @@
+name: eks bastion setup
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: " apply or destroy ?"
+        required: true
+        type: choice
+        options:
+         - apply
+         - destroy 
+jobs:
+  eks-bastion:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Copy Repo Files
+      uses: actions/checkout@v5
+    - name: Configure AWS Credentials 
+      uses: aws-actions/configure-aws-credentials@v6.2.3
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+    - name: terraform add-iin
+      uses: hashicorp/setup-terraform@v3
+    - name: terraform init
+      run: terraform init
+    - name: terraform plan
+      if: ${{ inputs.action == 'apply' }}
+      run: terraform plan
+    - name: terraform apply
+      if: ${{ inputs.action == 'apply' }}
+      run: terraform apply -auto-approve
+    - name: terraform destroy
+      if: ${{ inputs.action == 'destroy' }}
+      run: terraform destroy -auto-approve
