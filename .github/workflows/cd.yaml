@@ -10,7 +10,7 @@ on:
          - apply
          - destroy
 jobs:  
-  deploying eks expense:
+  deploy:
     runs-on: ubuntu-latest
     steps:
     - name: Copy Repo Files
@@ -21,18 +21,19 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
-    - name: terraform add-iin
+    - name: setup terraform
       uses: hashicorp/setup-terraform@v3
-    - name: terraform init
-      run: terraform init
-    - name: VPC 
-      if: ${{ inputs.action == 'apply' }}
-      run: terraform apply -auto-approve
-      run: sg 
-    - name: terraform apply
-      if: ${{ inputs.action == 'apply' }}
-      run: terraform apply -auto-approve
-      needs: VPC
-    # - name: terraform destroy
-    #   if: ${{ inputs.action == 'destroy' }}
-    #   run: terraform destroy -auto-approve
+    - name: terraform init & plan for VPC
+      run: |
+        cd 10-vpc
+        terraform init | terraform plan
+      
+    # - name: VPC 
+    #   if: ${{ inputs.action == 'apply' }}
+    #   run: terraform apply -auto-approve
+    # - name: terraform apply
+    #   if: ${{ inputs.action == 'apply' }}
+    #   run: terraform apply -auto-approve
+    # # - name: terraform destroy
+    # #   if: ${{ inputs.action == 'destroy' }}
+    # #   run: terraform destroy -auto-approve
