@@ -39,9 +39,7 @@ jobs:
     - name: terraform destroy
       run: |
         for MODULE in 30-bastion 20-security-group 10-vpc; do
-          echo ">>> Processing $MODULE"
-          terraform -chdir=$MODULE init
-          terraform -chdir=$MODULE plan
+          echo ">>> Destroying $MODULE"
           if [[ "${{inputs.action }}" == "destroy" ]]; then
             terraform -chdir=$MODULE destroy -auto-approve
           fi
