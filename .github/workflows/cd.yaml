@@ -25,15 +25,17 @@ jobs:
       uses: hashicorp/setup-terraform@v3
     - name: terraform init, plan and apply
       run: |
-        for MODULE in 10-vpc 20-security-group 30-bastion
-        echo ">>> Processing $MODULE"
-        terraform -chdir=$MODULE init
-        terraform -chdir=$MODULE plan
-        if [[ "${{ inputs.action }}" == apply ]]; then
-          terraform -chdir=$MODULE apply -auto-approve
-        fi
-        if [[ "${{inputs.action }}" == "destroy" ]]; then
-          terraform -chdir=$MODULE destroy -auto-approve
+        for MODULE in 10-vpc 20-security-group 30-bastion; do
+          echo ">>> Processing $MODULE"
+          terraform -chdir=$MODULE init
+          terraform -chdir=$MODULE plan
+          if [[ "${{ inputs.action }}" == apply ]]; then
+            terraform -chdir=$MODULE apply -auto-approve
+          fi
+          if [[ "${{inputs.action }}" == "destroy" ]]; then
+            terraform -chdir=$MODULE destroy -auto-approve
+          fi
+        done
 
     # - name: terraform init & plan for VPC module
     #   run: |
