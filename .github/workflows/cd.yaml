@@ -29,7 +29,7 @@ jobs:
           if [[ "${{ inputs.action }}" == apply ]]; then
             echo ">>> Processing $MODULE"
             terraform -chdir=$MODULE init
-            terraform -chdir=$MODULE plan; then
+            terraform -chdir=$MODULE plan
             terraform -chdir=$MODULE apply -auto-approve
           fi
           # if [[ "${{inputs.action }}" == "destroy" ]]; then
