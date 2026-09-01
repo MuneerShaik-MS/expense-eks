@@ -34,7 +34,7 @@ jobs:
     - name: terraform apply
       if: ${{ inputs.action == 'apply' }}
       run: terraform apply -auto-approve
-      -name: terraform init & plan for SG module
+    - name: terraform init & plan for SG module
       run: |
         cd 20-security-group
         terraform init
